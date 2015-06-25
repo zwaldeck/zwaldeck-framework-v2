@@ -57,7 +57,6 @@ class Router extends ContainerAware
                             $vars[rtrim(ltrim($partsRoute[$i], '{'), '}')] = $partsURI[$i];
                         }
                         else if(strtolower($partsRoute[$i]) !== strtolower($partsURI[$i])) {
-                            $good = false;
                             break;
                         }
                     }

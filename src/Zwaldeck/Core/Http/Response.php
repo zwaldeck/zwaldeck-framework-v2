@@ -111,7 +111,7 @@ class Response
         $this->statusCode = $statusCode;
         $this->statusText = self::$statusTexts[$this->statusCode];
 
-        if ($request->getHeaders()->getParameter('SERVER_PROTOCOL') === 'HTTP/1.1') {
+        if ($request->getProtocol()  === 'HTTP/1.1') {
             $this->httpVersion = "1.1";
         } else {
             $this->httpVersion = "1.0";

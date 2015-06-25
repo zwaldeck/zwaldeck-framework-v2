@@ -8,23 +8,54 @@ namespace Zwaldeck\Core\Http;
  */
 class Request
 {
-
+    /**
+     * @var string
+     */
     private $method;
+
+    /**
+     * @var ParameterMap
+     */
     private $query;
+
+    /**
+     * @var ParameterMap
+     */
     private $post;
+
+    /**
+     * @var ParameterMap
+     */
     private $headers;
+
     private $files;
+
+    /**
+     * @var ParameterMap
+     */
     private $cookies;
+
+    private $protocol;
+
+    private $requestURI;
 
     public function __construct()
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->query = new ParameterMap($_GET);
         $this->post = new ParameterMap($_POST);
-        //todo headers are not right!!!
-        $this->headers = new ParameterMap($_SERVER);
+        $headers = array();
+        foreach ($_SERVER as $name => $value) {
+            if (substr($name, 0, 5) == 'HTTP_') {
+                $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+            }
+        }
+        $this->headers = new ParameterMap($headers);
         $this->cookies = new ParameterMap($_COOKIE);
         //TODO files
+
+        $this->protocol = $_SERVER['SERVER_PROTOCOL'];
+        $this->requestURI = $_SERVER['REQUEST_URI'];
 
         //empty the super globals
         $_GET = array();
@@ -77,21 +108,24 @@ class Request
     /**
      * @return array|null|string
      */
-    public function getHost() {
+    public function getHost()
+    {
         return $this->headers->getParameter('HTTP_HOST');
     }
 
     /**
      * @return bool
      */
-    public function isSecure() {
+    public function isSecure()
+    {
         return $this->headers->getParameter('REQUEST_SCHEME') === 'https';
     }
 
     /**
      * @return string
      */
-    public function getMethod() {
+    public function getMethod()
+    {
         return $this->method;
     }
 
@@ -99,14 +133,32 @@ class Request
      * @param $method
      * @return bool
      */
-    public function isMethod($method) {
+    public function isMethod($method)
+    {
         return $this->method === strtoupper($method);
     }
 
     /**
      * @return array|null|string
      */
-    public function getUri() {
-        return $this->headers->getParameter('REQUEST_URI');
+    public function getUri()
+    {
+        return $this->requestURI;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProtocol()
+    {
+        return $this->protocol;
+    }
+
+    /**
+     * @param mixed $protocol
+     */
+    public function setProtocol($protocol)
+    {
+        $this->protocol = $protocol;
     }
 }

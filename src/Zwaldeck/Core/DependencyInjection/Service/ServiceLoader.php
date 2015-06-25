@@ -60,6 +60,7 @@ class ServiceLoader
                 if ($reflectionClass->implementsInterface("Zwaldeck\\Core\\DependencyInjection\\ContainerAwareInterface")) {
                     $serviceObj->setContainer($container);
                 }
+
                 $container->addService($service->getName(), $serviceObj);
                 unset($this->servicesToLoad[$i]);
                 $this->servicesToLoad = array_values($this->servicesToLoad);

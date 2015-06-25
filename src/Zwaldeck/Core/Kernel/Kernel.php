@@ -75,6 +75,7 @@ abstract class Kernel implements KernelInterface
      */
     public function handleRequest(Request $request)
     {
+
         if (!$this->booted) {
             $this->boot();
         }
