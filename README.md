@@ -2,7 +2,7 @@
 
 **** Current Version: Pre-Alpha 0.1.0
 
-### Features:
+### Current Features:
 - Autoloading
 - XML Config
 - Dependency Injection
