@@ -9,6 +9,19 @@
 - Routing
 - Plugins
 
+### Future Features(List will expand):
+- Templating Engine
+- ORM
+- Database Adapters
+- Form API
+- Session API
+- Security
+
+
+
+
+
+
 
 
 
