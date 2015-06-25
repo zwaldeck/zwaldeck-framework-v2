@@ -1,0 +1,30 @@
+<services>
+    <service name="company.test2" class="Company\Plugins\FirstPlugin\Tmp\TestService">
+        <con-arg>99</con-arg>
+        <con-arg>string</con-arg>
+        <con-arg>
+            <array>
+                <value key="key1">value1</value>
+                <value key="key2">value2</value>
+                <value>value3</value>
+                <value key="key4">value4</value>
+            </array>
+        </con-arg>
+        <con-arg>
+            <service>company.test</service>
+        </con-arg>
+    </service>
+
+    <service name="company.test" class="Company\Plugins\FirstPlugin\Tmp\TestService">
+        <con-arg>99</con-arg>
+        <con-arg>string</con-arg>
+        <con-arg>
+            <array>
+                <value>key1 | value1</value>
+                <value>key2 | value2</value>
+                <value>value3</value>
+                <value>key4 | value4</value>
+            </array>
+        </con-arg>
+    </service>
+</services>

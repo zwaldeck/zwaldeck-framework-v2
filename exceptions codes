@@ -1,0 +1,7 @@
+700 --> NoSuchServiceException
+701 --> NoSuchParameterException
+702 --> NoSuchFileException
+703 --> MalformedPluginClassException
+704 --> ControllerClassNotFoundException
+705 --> InvalidControllerClassException
+706 --> NoSuchActionException

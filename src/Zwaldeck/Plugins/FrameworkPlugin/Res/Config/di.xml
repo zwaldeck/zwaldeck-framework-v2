@@ -1,0 +1,9 @@
+<services>
+    <service name="zwaldeck.httpKernel" class="Zwaldeck\Core\Http\HttpKernel">
+        <con-arg>
+            <service>zwaldeck.router</service>
+        </con-arg>
+    </service>
+
+
+</services>

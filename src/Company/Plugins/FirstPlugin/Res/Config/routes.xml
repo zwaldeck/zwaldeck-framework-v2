@@ -1,0 +1,20 @@
+<routes>
+    <route>
+        <uri>/welcome/{firstName}/{lastName}</uri>
+        <controller>HomeController</controller>
+        <action>welcomeAction</action>
+    </route>
+
+    <route>
+        <uri>/goodbye/{gender}</uri>
+        <controller>HomeController</controller>
+        <action>goodbyeAction</action>
+    </route>
+
+    <route>
+        <uri>/test</uri>
+        <controller>TestController</controller>
+        <action>testAction</action>
+    </route>
+
+</routes>
