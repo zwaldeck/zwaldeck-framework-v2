@@ -1,0 +1,9 @@
+<config>
+    <database>
+        <username>root</username>
+        <password>root</password>
+        <database-name>zwaldeck-framework-test</database-name>
+        <port>3306</port>
+        <charset>utf8</charset>
+    </database>
+</config>
