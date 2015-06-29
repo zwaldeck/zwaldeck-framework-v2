@@ -9,4 +9,8 @@ use Zwaldeck\Core\Plugin\Plugin;
  */
 class FirstPlugin extends Plugin {
 
+    public function getName()
+    {
+        return "CompanyFirstPlugin";
+    }
 }

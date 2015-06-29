@@ -5,3 +5,7 @@
 704 --> ControllerClassNotFoundException
 705 --> InvalidControllerClassException
 706 --> NoSuchActionException
+707 --> PluginAlreadyRegisteredException
+708 --> NoSuchPluginException
+709 --> NoSuchViewException
+710 --> NoSuchVariableInViewException

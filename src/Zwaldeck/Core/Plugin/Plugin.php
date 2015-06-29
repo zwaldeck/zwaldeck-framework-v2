@@ -17,13 +17,7 @@ abstract class Plugin extends ContainerAware implements PluginInterface {
     {
     }
 
-    public function getName()
-    {
-        $name = get_class($this);
-        $pos = strrpos($name, '\\');
-
-        return $pos === false ? $name :  substr($name, $pos + 1);
-    }
+    public abstract function getName();
 
     public function getNamespace()
     {

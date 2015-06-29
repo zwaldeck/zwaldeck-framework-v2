@@ -9,4 +9,8 @@ use Zwaldeck\Core\Plugin\Plugin;
  */
 class FrameworkPlugin extends Plugin {
 
+    public function getName()
+    {
+        return "ZwaldeckFrameworkPlugin";
+    }
 }

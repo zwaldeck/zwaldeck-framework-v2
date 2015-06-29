@@ -78,7 +78,7 @@ class Container implements ContainerInterface{
      */
     public function addParameter($name, $value)
     {
-        $this->parameters[$name] = $value;
+        $this->parameters->addParameter($name, $value);
     }
 
     /**

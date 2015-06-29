@@ -6,9 +6,11 @@ use Zwaldeck\Core\DependencyInjection\Container;
 use Zwaldeck\Core\DependencyInjection\ContainerInterface;
 use Zwaldeck\Core\DependencyInjection\Service\ServiceLoader;
 use Zwaldeck\Core\Exceptions\MalformedPluginClassException;
+use Zwaldeck\Core\Exceptions\PluginAlreadyRegisteredException;
 use Zwaldeck\Core\Http\Request;
 use Zwaldeck\Core\Http\Response;
 use Zwaldeck\Core\Plugin\Plugin;
+use Zwaldeck\Core\Plugin\PluginManager;
 use Zwaldeck\Core\Utils\StringUtils;
 use Zwaldeck\Plugins\FrameworkPlugin\Routing\Router;
 
@@ -37,6 +39,11 @@ abstract class Kernel implements KernelInterface
      */
     protected $parsers;
 
+    /**
+     * @param $rootDir
+     * @param $environment
+     * @param $debug
+     */
     public function __construct($rootDir, $environment, $debug)
     {
         $this->plugins = array();
@@ -85,6 +92,7 @@ abstract class Kernel implements KernelInterface
 
     private function registerPlugins()
     {
+        //automatic detection for plugins
         $srcRoot = $this->rootDir . '/../src/';
         $dirs = scandir($srcRoot);
         foreach ($dirs as $dir) {
@@ -99,7 +107,13 @@ abstract class Kernel implements KernelInterface
                                     $instance = new $className();
                                     if ($instance instanceof Plugin) {
                                         $instance->setContainer($this->container);
-                                        $this->plugins[$instance->getName()] = $instance;
+                                        if(!array_key_exists($instance->getName(), $this->plugins)) {
+                                            $this->plugins[$instance->getName()] = $instance;
+                                        }
+                                        else {
+                                            throw new PluginAlreadyRegisteredException($instance->getName());
+                                        }
+
                                     }
                                     else {
                                         throw new MalformedPluginClassException($pluginFile);
@@ -116,9 +130,20 @@ abstract class Kernel implements KernelInterface
     private function loadContainer()
     {
         //we add router this way to the container because it needs that array with parsers
-        $this->container->addService("zwaldeck.router", new Router($this->parsers["routes"]));
+        $router = new Router($this->parsers["routes"]);
+        $router->setContainer($this->container);
+        $this->container->addService("zwaldeck.router", $router);
+        //we add the plugin manager manualy so we now it has the plugins
+        $pluginManager = new PluginManager($this->plugins);
+        $this->container->addService("zwaldeck.plugin_manager", $pluginManager);
         $serviceLoader = new ServiceLoader($this->parsers["services"]);
         $serviceLoader->loadServices($this->container);
+
+        //load parameters
+        //insert parameters we ALWAYS want
+        $this->container->addParameter("root_dir", $this->getRootDir());
+
+        //todo load parameters from config files
     }
 
     private function loadParsers() {

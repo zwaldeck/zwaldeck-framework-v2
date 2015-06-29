@@ -98,9 +98,10 @@ class Router extends ContainerAware
             throw new NoSuchActionException($route->getControllerClass(), $route->getAction());
         }
 
-        $refMethod = new \ReflectionMethod($route->getControllerClass(), $route->getAction());
+        //$refMethod = new \ReflectionMethod($route->getControllerClass(), $route->getAction());
 
         $controller = $refObj->newInstanceArgs(array($request));
+        $controller->setContainer($this->container);
 
         return call_user_func_array(array($controller, $route->getAction()), $params);
     }

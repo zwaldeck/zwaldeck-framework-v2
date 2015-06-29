@@ -4,6 +4,8 @@
             <service>zwaldeck.router</service>
         </con-arg>
     </service>
+    <service name="zwaldeck.template_engine" class="Zwaldeck\Plugins\FrameworkPlugin\Templating\TemplateEngine">
+    </service>
 
 
 </services>

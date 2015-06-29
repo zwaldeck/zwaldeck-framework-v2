@@ -14,3 +14,4 @@ $kernel = new UserKernel($autoLoader->getRootDir(), "dev", true);
 $request = new Request();
 $response = $kernel->handleRequest($request);
 $response->send();
+
