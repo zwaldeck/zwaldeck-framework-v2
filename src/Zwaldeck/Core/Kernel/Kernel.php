@@ -7,6 +7,7 @@ use Zwaldeck\Core\DependencyInjection\ContainerInterface;
 use Zwaldeck\Core\DependencyInjection\Service\ServiceLoader;
 use Zwaldeck\Core\Exceptions\MalformedPluginClassException;
 use Zwaldeck\Core\Exceptions\PluginAlreadyRegisteredException;
+use Zwaldeck\Core\File\Parser\XMLConfigParser;
 use Zwaldeck\Core\Http\Request;
 use Zwaldeck\Core\Http\Response;
 use Zwaldeck\Core\Plugin\Plugin;
@@ -40,6 +41,11 @@ abstract class Kernel implements KernelInterface
     protected $parsers;
 
     /**
+     * @var XMLConfigParser
+     */
+    protected $config;
+
+    /**
      * @param $rootDir
      * @param $environment
      * @param $debug
@@ -58,6 +64,9 @@ abstract class Kernel implements KernelInterface
     public function boot()
     {
         $this->container = new Container();
+
+        //load config
+        $this->config = new XMLConfigParser($this->rootDir.'/../app/config.xml');
 
         //load plugins
         $this->registerPlugins();
@@ -142,6 +151,7 @@ abstract class Kernel implements KernelInterface
         //load parameters
         //insert parameters we ALWAYS want
         $this->container->addParameter("root_dir", $this->getRootDir());
+        $this->container->addParameter("global_config", $this->config->getConfig());
 
         //todo load parameters from config files
     }
