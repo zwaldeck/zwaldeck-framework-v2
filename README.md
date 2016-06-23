@@ -1,5 +1,7 @@
 # Zwaldeck Framework 2.0
 
+Unfinished (Stopped development)
+
 ## Current Version: Pre-Alpha 0.1.0
 
 ### Doing at the moment
